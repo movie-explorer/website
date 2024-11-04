@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const parseXML = (xml) => {
+const parseXML = xml => {
   const parser = new DOMParser()
   const xmlDoc = parser.parseFromString(xml, 'text/xml')
   const shows = xmlDoc.getElementsByTagName('Show')
@@ -33,7 +33,7 @@ const parseXML = (xml) => {
   return movies
 }
 
-export const fetchShowtimes = async () => {
-  const response = await axios.get('https://www.finnkino.fi/xml/Schedule/?area=1018&dt=01.11.2024')
+export const fetchShowtimes = async (date) => {
+  const response = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=1018&dt=${date}`)
   return parseXML(response.data)
 }
