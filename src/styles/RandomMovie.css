@@ -1,0 +1,32 @@
+.movie-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #bb8af7;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.randomMovie-card {
+    background-color: #1e1e1e;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.movie-image {
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    width: 200px;
+    height: 300px;
+}
+
+.movie-description {
+    font-size: 0.85rem;
+    color: #white;
+}
