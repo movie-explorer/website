@@ -6,6 +6,7 @@ import Group from './pages/Group.js';
 import Auth from './pages/Auth.js';
 import ErrorPage from "./pages/ErrorPage.js";
 import Footer from "./components/Footer.js";
+import Signup from './pages/Signup.js';
 
 export default function App() {
     return (
@@ -16,7 +17,7 @@ export default function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/group" element={<Group />} />
                     <Route path="/login" element={<Auth />} />
-                    <Route path="/signup" element={<Auth />} />
+                    <Route path="/signup" element={<Signup />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
                 <Footer />
