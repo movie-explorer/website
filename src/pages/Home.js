@@ -38,17 +38,12 @@ function Home() {
                                 </li>
                             </ul>
                         </div>
-
-                        <div className="search-section">
-                            <input></input>
-                        </div>
                     </div>
 
                     <aside className="sidebar">
                         <RandomMovie/>
                     </aside>
                 </div>
-                <Footer/>
             </main>
         </>
     );
