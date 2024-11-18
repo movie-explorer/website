@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from './components/Header.js';
 import Home from './pages/Home.js';
 import Group from './pages/Group.js';
@@ -7,6 +7,7 @@ import Auth from './pages/Auth.js';
 import ErrorPage from "./pages/ErrorPage.js";
 import Footer from "./components/Footer.js";
 import Signup from './pages/Signup.js';
+import MovieInfo from "./pages/MovieInfo.js";
 
 export default function App() {
     return (
@@ -18,6 +19,8 @@ export default function App() {
                     <Route path="/group" element={<Group />} />
                     <Route path="/login" element={<Auth />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/signup" element={<Auth />} />
+                    <Route path="/movieinfo" element={<MovieInfo />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
                 <Footer />
