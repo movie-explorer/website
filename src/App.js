@@ -8,6 +8,7 @@ import ErrorPage from "./pages/ErrorPage.js";
 import Footer from "./components/Footer.js";
 import Signup from './pages/Signup.js';
 import MovieInfo from "./pages/MovieInfo.js";
+import MovieShowtimes from './pages/MovieShowtime.js';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/movieinfo" element={<MovieInfo />} />
+                    <Route path="/showtimes" element={<MovieShowtimes/>} />
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
                 <Footer />
