@@ -1,24 +1,23 @@
 import { Link } from "react-router-dom";
 import React from 'react';
+import '../styles/Auth.css';
 
 export default function Auth() {
     return (
-        <div>
-            <h3>Sign in</h3>
-            <form>
-                <div>
-                    <label>Email</label>
-                    <input type="email" />
+        <div className="auth-container">
+            <h3 className="auth-header">Sign in</h3>
+            <form className="login-form">
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" />
                 </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" />
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" />
                 </div>
-                <div>
-                    <button type="submit">Login</button>
-                </div>
-                <div>
-                    <Link to='/signup'>No account? Sign up</Link>
+                <button type="submit" className="login-button">Login</button>
+                <div className="signup-link">
+                    <Link to='/signup'>No account? <span>Sign up</span></Link>
                 </div>
             </form>
         </div>
