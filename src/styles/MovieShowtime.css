@@ -1,0 +1,160 @@
+.movie-showtimes {
+    --bg-color: #121212;
+    --card-bg-color: #1e1e1e;
+    --text-color: #ffffff;
+    --accent-color: #bb86fc;
+    --input-bg-color: #333333;
+    --input-text-color: #ffffff;
+    --border-color: #444444;
+    --font-size-large: 1.8rem;
+    --font-size-medium: 1.2rem;
+    --font-size-small: 1rem;
+
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+}
+
+.movie-showtimes h1 {
+    color: var(--accent-color);
+    font-size: var(--font-size-large);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.movie-showtimes label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: var(--font-size-medium);
+}
+
+.movie-showtimes input[type="text"] {
+    padding: 10px 15px;
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: var(--font-size-medium);
+    text-align: center;
+    margin-top: 8px;
+    width: 80%;
+    max-width: 300px;
+    transition: border-color 0.3s;
+}
+
+.movie-showtimes input[type="text"]:focus {
+    border-color: var(--accent-color);
+}
+
+.movie-showtimes input[type="text"]::placeholder {
+    color: #aaaaaa;
+}
+
+.movie-showtimes button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 6px;
+    font-size: var(--font-size-medium);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.movie-showtimes button:hover {
+    background-color: #a370f8;
+}
+
+.movie-showtimes .movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+.movie-showtimes .movie-card {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    width: calc(25% - 16px); 
+    max-width: 220px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.movie-showtimes .movie-card:hover {
+    transform: scale(1.03);
+}
+
+.movie-showtimes .movie-poster {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.movie-showtimes .movie-card h3 {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.movie-showtimes .movie-card p {
+    font-size: var(--font-size-small);
+    margin: 6px 0;
+}
+
+.movie-showtimes a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 12px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border-radius: 6px;
+    font-size: var(--font-size-small);
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.movie-showtimes a:hover {
+    background-color: #a370f8;
+}
+
+.movie-showtimes .loading, .movie-showtimes .error {
+    text-align: center;
+    font-size: var(--font-size-medium);
+    color: var(--accent-color);
+    margin-top: 20px;
+}
+
+@media (max-width: 992px) {
+    .movie-showtimes .movie-card {
+        width: calc(33.33% - 16px); /* 3 per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .movie-showtimes .movie-card {
+        width: calc(50% - 16px); /* 2 per row on small screens */
+    
+
+    .movie-showtimes h1, .movie-showtimes label, .movie-showtimes .loading, .movie-showtimes .error {
+        font-size: var(--font-size-large);
+    }
+}
+}
+
+@media (max-width: 576px) {
+    .movie-showtimes .movie-card {
+        width: 100%; /* Stack vertically on extra-small screens */
+    
+    }
+}
