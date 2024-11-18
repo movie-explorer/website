@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from './components/Header.js';
 import Home from './pages/Home.js';
 import Group from './pages/Group.js';
-import Auth from './pages/Auth.js';
+import Login from './pages/Login.js';
 import ErrorPage from "./pages/ErrorPage.js";
 import Footer from "./components/Footer.js";
 import Signup from './pages/Signup.js';
 import MovieInfo from "./pages/MovieInfo.js";
 
-export default function App() {
+function App() {
     return (
         <Router>
             <div className="app">
@@ -17,9 +17,8 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/group" element={<Group />} />
-                    <Route path="/login" element={<Auth />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="/signup" element={<Auth />} />
                     <Route path="/movieinfo" element={<MovieInfo />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
@@ -28,3 +27,5 @@ export default function App() {
         </Router>
     );
 }
+
+export default App;
