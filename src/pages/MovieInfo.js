@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import '../styles/MovieInfo.css';
@@ -26,6 +26,7 @@ function MovieInfo() {
     const [searchQuery, setSearchQuery] = useState('');
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
+    const [filter, setFilter] = useState('all');
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [showMovies, setShowMovies] = useState(true);
@@ -40,7 +41,7 @@ function MovieInfo() {
         try {
             const response = await axios.request({
                 ...options,
-                params: {...options.params, page: pageNumber, query: searchQuery},
+                params: { ...options.params, page: pageNumber, query: searchQuery },
             });
             const data = response.data;
             setMovies(data.results || []);
@@ -72,7 +73,7 @@ function MovieInfo() {
     const closeModal = () => {
         setSelectedMovie(null);
         setIsModalOpen(false);
-    }
+    };
 
     const filteredMovies = movies.filter((item) => {
         if (item.media_type === 'movie') return showMovies;
@@ -88,8 +89,12 @@ function MovieInfo() {
                 onClick={() => {
                     setMovies([]);
                     setSearchQuery('');
+                    setFilter('all');
+                    setShowMovies(true);
+                    setShowTV(true);
+                    setShowPeople(true);
                 }}
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
             >
                 Movie Info
             </button>

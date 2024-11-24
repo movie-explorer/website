@@ -34,7 +34,7 @@ function Home() {
                                 </li>
                                 <li>
                                     <p>Go to your profile:</p>
-                                    <Link to="/login" className="button">View Profile</Link>
+                                    <Link to="/profile" className="button">View Profile</Link>
                                 </li>
                             </ul>
                         </div>
