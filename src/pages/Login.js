@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React, { useState } from 'react';
 import '../styles/Login.css';
 import axios from 'axios';
@@ -10,6 +10,7 @@ export default function Login() {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     // Käsitellään syötteet
     const handleInputChange = (e) => {
@@ -31,6 +32,7 @@ export default function Login() {
             localStorage.setItem('token', token); // Tallenna token LocalStorageen
             setSuccess(JSON.stringify(response.data));
             setError('');
+            navigate('/');
         } catch (err) {
             setError(err.response?.data || 'An error occurred');
         }

@@ -9,6 +9,8 @@ import Footer from "./components/Footer.js";
 import Signup from './pages/Signup.js';
 import MovieInfo from "./pages/MovieInfo.js";
 import MovieShowtimes from './pages/MovieShowtime.js';
+import ProfilePage from "./pages/ProfilePage.js";
+
 
 function App() {
     return (
@@ -22,6 +24,7 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/movieinfo" element={<MovieInfo />} />
                     <Route path="/showtimes" element={<MovieShowtimes/>} />
+                    <Route path="/profile" element={<ProfilePage />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
                 <Footer />
