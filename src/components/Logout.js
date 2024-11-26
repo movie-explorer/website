@@ -18,8 +18,6 @@ export default function Logout() {
                 console.error('Ei löytynyt tokenia!');
                 return;
             }
-    
-            console.log('Lähetetään logout-pyyntö ilman Bearer-tokenia...');
 
             const response = await axios.get('https://moviexplorer.site/logout', {
         
