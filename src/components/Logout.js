@@ -1,47 +1,51 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
-import '../styles/Header.css';
-import { useUser } from '../components/UserProvider.js'; 
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
-import Cookies from 'js-cookie'; 
+import { useUser } from '../components/UserProvider.js';
+import Cookies from 'js-cookie';
 
-export default function Header() {
+export default function Logout() {
     const { user, logout } = useUser();
     const navigate = useNavigate();
     const [logoutMessage, setLogoutMessage] = useState(false);
 
     const handleLogout = async () => {
         try {
-            const token = Cookies.get('token');
 
+            const token = Cookies.get('token'); 
+    
             if (!token) {
                 console.error('Ei löytynyt tokenia!');
                 return;
             }
-
-            console.log('Lähetetään logout-pyyntö tokenilla...');
+    
+            console.log('Lähetetään logout-pyyntö ilman Bearer-tokenia...');
 
             const response = await axios.get('https://moviexplorer.site/logout', {
-                headers: {
-                    'Authorization': token, 
-                },
-            
+        
             });
-
+    
             console.log('Logout-pyyntö onnistui:', response.data);
-
-            logout();
-            setLogoutMessage(true);
-
+            logout(); 
+            setLogoutMessage(true); 
+    
             setTimeout(() => {
                 setLogoutMessage(false); 
                 navigate('/'); 
             }, 3000);
+    
         } catch (err) {
-            console.error('Logout epäonnistui:', err.response ? err.response.data : err.message);
+            console.error('Logout epäonnistui:', err);
+            if (err.response) {
+                console.log('Virhe response:', err.response.data);
+            } else if (err.request) {
+                console.log('Virhe requestissa:', err.request);
+            } else {
+                console.log('Virhe viestissä:', err.message);
+            }
             logout(); 
-            setLogoutMessage(true);
-
+            setLogoutMessage(true); 
+    
             setTimeout(() => {
                 setLogoutMessage(false); 
                 navigate('/'); 
