@@ -1,7 +1,8 @@
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 import '../styles/Login.css';
 import axios from 'axios';
+import { useUser } from '../components/UserProvider.js';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -10,27 +11,28 @@ export default function Login() {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const { login } = useUser();
     const navigate = useNavigate();
 
-    // Käsitellään syötteet
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
     };
 
-    // Lomakkeen lähetys
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://172.232.152.215:3000/login', {
+            const response = await axios.post('https://moviexplorer.site/login', {
                 username: formData.email,
                 password: formData.password
             });
 
-            const token = response.data.token; // Oletetaan, että backend palauttaa tokenin
-            localStorage.setItem('token', token); // Tallenna token LocalStorageen
-            setSuccess(JSON.stringify(response.data));
+            const userData = response.data;
+            const authToken = userData.token; 
+
+            login(userData, authToken); 
+            setSuccess('Login successful');
             setError('');
             navigate('/');
         } catch (err) {

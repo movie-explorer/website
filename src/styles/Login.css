@@ -93,3 +93,10 @@
 .signup-link span:hover {
     color: #2563eb;
 }
+
+.password-info {
+    text-align: center; 
+    color: black;      
+    font-size: 14px;    
+    margin: 10px 0;     
+}

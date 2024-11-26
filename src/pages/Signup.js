@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import '../styles/Login.css';
 import axios from 'axios';
 
-
-
 export default function Signup() {
     const [formData, setFormData] = useState({
         email: '',
@@ -21,13 +19,20 @@ export default function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/; 
+        if (!passwordRegex.test(formData.password)) {
+            setError('Password must contain at least one uppercase letter, one number, and be at least 8 characters long.');
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match');
             return;
         }
 
         try {
-            const response = await axios.post('http://172.232.152.215:3000/register', {
+            const response = await axios.post('https://moviexplorer.site/register', {
                 username: formData.email,
                 password: formData.password
             });
@@ -74,6 +79,9 @@ export default function Signup() {
                         onChange={handleInputChange}
                     />
                 </div>
+                <p className="password-info">
+                    Password must contain at least one uppercase letter, one number, and be at least 8 characters long.
+                </p>
                 <button type="submit" className="login-button">Sign up</button>
                 <div className="signup-link">
                     <Link to='/login'>Already have an account? <span>Login</span></Link>

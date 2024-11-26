@@ -10,10 +10,11 @@ import Signup from './pages/Signup.js';
 import MovieInfo from "./pages/MovieInfo.js";
 import MovieShowtimes from './pages/MovieShowtime.js';
 import ProfilePage from "./pages/ProfilePage.js";
-
+import { UserProvider } from './components/UserProvider.js';
 
 function App() {
     return (
+        <UserProvider>
         <Router>
             <div className="app">
                 <Header />
@@ -30,6 +31,7 @@ function App() {
                 <Footer />
             </div>
         </Router>
+        </UserProvider>
     );
 }
 
