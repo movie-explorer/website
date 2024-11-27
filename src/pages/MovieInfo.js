@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import '../styles/MovieInfo.css';
+import ReviewForm from "../components/ReviewForm.js";
 import noPhotoPoster from '../media/noPhotoPoster.png';
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
@@ -34,6 +35,8 @@ function MovieInfo() {
     const [showPeople, setShowPeople] = useState(true);
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [reviews, setReviews] = useState([]);
+    const [favoriteMovies, setFavoriteMovies] = useState([]);
 
     const searchMovies = async (pageNumber = 1) => {
         if (!searchQuery) return;
@@ -53,7 +56,6 @@ function MovieInfo() {
         }
     };
 
-    // What if you had a universal remote...
     const handleSearch = (e) => {
         e.preventDefault();
         setPage(1);
@@ -81,6 +83,20 @@ function MovieInfo() {
         if (item.media_type === 'person') return showPeople;
         return false;
     });
+
+    const handleFavoriteToggle = (movie) => {
+        setFavoriteMovies((prevFavorites) => {
+            if (prevFavorites.includes(movie.id)) {
+                return prevFavorites.filter((id) => id !== movie.id);
+            } else {
+                return [...prevFavorites, movie.id];
+            }
+        });
+    };
+
+    const handleReviewSubmit = (review) => {
+        setReviews([...reviews, review]);
+    };
 
     return (
         <div className="movie-info-container">
@@ -172,14 +188,24 @@ function MovieInfo() {
                                                     : 'N/A'}
                                             </p>
                                             <p className="movie-text">
-                                                Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}/10
+                                                TMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}/10
                                             </p>
                                             <p className="vote-count">
                                                 {movie.vote_count ? `(${movie.vote_count} votes)` : ''}
                                             </p>
                                         </>
                                     )}
+
                                     <p className="movie-text">Type: {movie.media_type.toUpperCase()}</p>
+
+                                    {movie.media_type === 'movie' && (
+                                        <button
+                                            className={`favorite-button ${favoriteMovies.includes(movie.id) ? 'favorite' : ''}`}
+                                            onClick={() => handleFavoriteToggle(movie)}
+                                        >
+                                            &#9733;
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -221,7 +247,26 @@ function MovieInfo() {
                             {selectedMovie.overview
                                 ? selectedMovie.overview
                                 : 'No overview available.'}
+                            <div className="rating">
+                                {selectedMovie.media_type === 'movie' && (
+                                    <>
+                                        <hr />
+                                        <h4>Did you watch the movie? Rate it!</h4>
+                                        <ReviewForm onSubmit={handleReviewSubmit} />
+                                    </>
+                                )}
+                            </div>
                         </p>
+                        <div className="reviews">
+                            {reviews.map((review, index) => (
+                                <div key={index} className="review">
+                                    <p>{review.reviewText}</p>
+                                    <p>Rating: {review.rating}/5</p>
+                                    <p>Email: {review.email}</p>
+                                    <p>Date: {review.date}</p>
+                                </div>
+                            ))}
+                        </div>
                         <button onClick={closeModal}>Close</button>
                     </div>
                 )}

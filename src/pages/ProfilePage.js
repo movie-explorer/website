@@ -8,6 +8,15 @@ function ProfilePage() {
     const { user, token, logout } = useUser();
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [favoriteMovies, setFavoriteMovies] = useState([
+        { title: "Inception", year: 2010 },
+        { title: "The Matrix", year: 1999 },
+        { title: "Interstellar", year: 2014 }
+    ]);
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
     useEffect(() => {
         if (!token) {
@@ -17,7 +26,6 @@ function ProfilePage() {
 
         const fetchUserData = async () => {
             try {
-                // Fetch user data from the backend
                 const response = await axios.get('https://moviexplorer.site/profile', {
                     headers: {
                         Authorization: token,
@@ -25,8 +33,6 @@ function ProfilePage() {
                 });
                 const { username, email, created_at } = response.data;
 
-
-                // Update user details in state
                 user.username = username;
                 user.email = email;
                 user.createdAt = created_at;
@@ -59,6 +65,28 @@ function ProfilePage() {
         }
     };
 
+    const handleChangePassword = async () => {
+        if (newPassword !== confirmNewPassword) {
+            setError("New passwords do not match!");
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                'https://moviexplorer.site/change-password',
+                { oldPassword, newPassword },
+                { headers: { Authorization: token } }
+            );
+            if (response.status === 200) {
+                alert("Password successfully changed!");
+                setShowPasswordModal(false);
+            }
+        } catch (error) {
+            console.error("Error changing password:", error);
+            setError("Failed to change password.");
+        }
+    };
+
     if (error) {
         return <div>{error}</div>;
     }
@@ -68,7 +96,7 @@ function ProfilePage() {
     }
 
     return (
-        <div className="container">
+        <div className="profilePageContainer">
             <div className="accountInformation">
                 <p><strong>Name:</strong> {user.username}</p>
                 <p><strong>Email:</strong> {user.email}</p>
@@ -77,11 +105,20 @@ function ProfilePage() {
 
             <div className="accountSettings">
                 <p><strong>Account settings:</strong></p>
-                <button className="change-password-btn">Change Password</button>
+                <button className="change-password-btn" onClick={() => setShowPasswordModal(true)}>
+                    Change Password
+                </button>
             </div>
 
-            <div className="profilePageImage">
-                <img src="https://placehold.co/200x200" alt="someRandomImageFromUIPlan" />
+            <div className="favoriteMovies">
+                <h3>Favorite Movies</h3>
+                <ul>
+                    {favoriteMovies.map((movie, index) => (
+                        <li key={index}>
+                            <strong>{movie.title}</strong> ({movie.year})
+                        </li>
+                    ))}
+                </ul>
             </div>
 
             <div className="dangerZone">
@@ -89,6 +126,40 @@ function ProfilePage() {
                     Delete Account
                 </button>
             </div>
+
+            {showPasswordModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Change Password</h3>
+                        <label>Old Password:</label>
+                        <input
+                            type="password"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                        />
+                        <label>New Password:</label>
+                        <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <label>Confirm New Password:</label>
+                        <input
+                            type="password"
+                            value={confirmNewPassword}
+                            onChange={(e) => setConfirmNewPassword(e.target.value)}
+                        />
+                        <div className="modal-buttons">
+                            <button className="modal-save-btn" onClick={handleChangePassword}>
+                                Save
+                            </button>
+                            <button className="modal-cancel-btn" onClick={() => setShowPasswordModal(false)}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

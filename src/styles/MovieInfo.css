@@ -196,3 +196,29 @@ p {
     cursor: pointer;
     font-size: 16px;
 }
+
+.movie-info-card {
+    position: relative;
+}
+
+.favorite-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 35px;
+    color: white;  
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.favorite-button.favorite {
+    color: orange;  
+}
+
+.favorite-button:focus {
+    outline: none;
+}
+
+
