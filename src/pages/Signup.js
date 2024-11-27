@@ -5,6 +5,7 @@ import axios from 'axios';
 
 export default function Signup() {
     const [formData, setFormData] = useState({
+        username: '', // Lisätty käyttäjänimi
         email: '',
         password: '',
         confirmPassword: ''
@@ -33,7 +34,8 @@ export default function Signup() {
 
         try {
             const response = await axios.post('https://moviexplorer.site/register', {
-                username: formData.email,
+                username: formData.username, // Käyttäjänimi lähetetään
+                email: formData.email,
                 password: formData.password
             });
             setSuccess(JSON.stringify(response.data));
@@ -49,6 +51,16 @@ export default function Signup() {
             {error && <p className="error">{error}</p>}
             {success && <p className="success">{success}</p>}
             <form className="login-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Choose a username"
+                        value={formData.username}
+                        onChange={handleInputChange}
+                    />
+                </div>
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input

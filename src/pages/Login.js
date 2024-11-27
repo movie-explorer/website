@@ -6,7 +6,7 @@ import { useUser } from '../components/UserProvider.js';
 
 export default function Login() {
     const [formData, setFormData] = useState({
-        email: '',
+        username: '', // Käyttäjätunnus
         password: ''
     });
     const [error, setError] = useState('');
@@ -24,12 +24,12 @@ export default function Login() {
 
         try {
             const response = await axios.post('https://moviexplorer.site/login', {
-                username: formData.email,
+                username: formData.username, // Käyttäjätunnus käytetään nyt
                 password: formData.password
             });
 
             const userData = response.data;
-            const authToken = userData.token; 
+            const authToken = userData.token;
 
             login(userData, authToken); 
             setSuccess('Login successful');
@@ -47,12 +47,12 @@ export default function Login() {
             {success && <p className="success">{success}</p>}
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="username">Username</label>
                     <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
+                        type="text"
+                        id="username"
+                        placeholder="Enter your username"
+                        value={formData.username}
                         onChange={handleInputChange}
                     />
                 </div>
