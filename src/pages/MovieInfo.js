@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUser } from '../components/UserProvider.js';
+import { addFavorite, removeFavorite } from '../components/FavoriteList.js';
 import axios from 'axios';
 import Modal from 'react-modal';
 import '../styles/MovieInfo.css';
@@ -37,6 +39,8 @@ function MovieInfo() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const { token } = useUser();
 
     const searchMovies = async (pageNumber = 1) => {
         if (!searchQuery) return;
@@ -84,14 +88,21 @@ function MovieInfo() {
         return false;
     });
 
-    const handleFavoriteToggle = (movie) => {
-        setFavoriteMovies((prevFavorites) => {
-            if (prevFavorites.includes(movie.id)) {
-                return prevFavorites.filter((id) => id !== movie.id);
+    const handleFavoriteToggle = async (movie) => {
+        if (!token) return;
+
+        try {
+            if (favoriteMovies.includes(movie.id)) {
+                await removeFavorite(movie.id, token);
+                setFavoriteMovies(prev => prev.filter(id => id !== movie.id));
             } else {
-                return [...prevFavorites, movie.id];
+                await addFavorite(movie.id, token);
+                setFavoriteMovies(prev => [...prev, movie.id]);
             }
-        });
+        } catch (error) {
+            console.error("Error toggling favorite:", error);
+            setError("Failed to update favorites");
+        }
     };
 
     const handleReviewSubmit = (review) => {
@@ -203,7 +214,7 @@ function MovieInfo() {
                                             className={`favorite-button ${favoriteMovies.includes(movie.id) ? 'favorite' : ''}`}
                                             onClick={() => handleFavoriteToggle(movie)}
                                         >
-                                            &#9733;
+                                            {favoriteMovies.includes(movie.id) ? "★" : "☆"}
                                         </button>
                                     )}
                                 </div>

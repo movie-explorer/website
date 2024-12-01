@@ -3,16 +3,12 @@ import '../styles/ProfilePage.css';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserProvider.js';
 import axios from 'axios';
+import FavoriteList from "../components/FavoriteList.js";
 
 function ProfilePage() {
     const { user, token, logout } = useUser();
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const [favoriteMovies, setFavoriteMovies] = useState([
-        { title: "Inception", year: 2010 },
-        { title: "The Matrix", year: 1999 },
-        { title: "Interstellar", year: 2014 }
-    ]);
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -110,15 +106,9 @@ function ProfilePage() {
                 </button>
             </div>
 
-            <div className="favoriteMovies">
+            <div className="favorites-section">
                 <h3>Favorite Movies</h3>
-                <ul>
-                    {favoriteMovies.map((movie, index) => (
-                        <li key={index}>
-                            <strong>{movie.title}</strong> ({movie.year})
-                        </li>
-                    ))}
-                </ul>
+                <FavoriteList/>
             </div>
 
             <div className="dangerZone">
