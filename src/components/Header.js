@@ -58,6 +58,7 @@ export default function Header() {
                         <li><Link to="/movieinfo" className="nav-link">Movie info</Link></li>
                         <li><Link to="/group" className="nav-link">Groups</Link></li>
                         <li><Link to="/showtimes" className="nav-link">Showtime</Link></li>
+                        <li><Link to="/profile" className="nav-link">Profile</Link></li>
                     </ul>
                 </nav>
                 {user ? (

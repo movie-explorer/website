@@ -22,15 +22,42 @@
     margin-bottom: 20px;
 }
 
-.movie-showtimes label {
+
+.filters-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;  
+    margin-bottom: 20px;
+}
+
+
+.filter-box {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     margin-bottom: 20px;
-    font-size: var(--font-size-medium);
+    gap: 20px; 
 }
 
-.movie-showtimes input[type="text"] {
+
+.filter-box label {
+    font-size: var(--font-size-medium);
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+
+.filter-box select,
+.filter-box input[type="text"] {
     padding: 10px 15px;
     background-color: var(--input-bg-color);
     color: var(--input-text-color);
@@ -38,22 +65,23 @@
     border-radius: 6px;
     font-size: var(--font-size-medium);
     text-align: center;
-    margin-top: 8px;
-    width: 80%;
-    max-width: 300px;
+    width: 100%; 
+    max-width: 100%; 
     transition: border-color 0.3s;
 }
 
-.movie-showtimes input[type="text"]:focus {
-    border-color: var(--accent-color);
+
+.filter-box select:focus,
+.filter-box input[type="text"]:focus {
+    border-color: var(--accent-color); 
 }
 
-.movie-showtimes input[type="text"]::placeholder {
+.filter-box input[type="text"]::placeholder {
     color: #aaaaaa;
 }
 
 .movie-showtimes button {
-    margin-top: 15px;
+    margin-top: 10px;
     padding: 10px 20px;
     background-color: var(--accent-color);
     color: var(--bg-color);
@@ -62,7 +90,6 @@
     font-size: var(--font-size-medium);
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-bottom: 30px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -77,6 +104,7 @@
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
+    padding-top: 15px;
 }
 
 .movie-showtimes .movie-card {
@@ -128,33 +156,63 @@
     background-color: #a370f8;
 }
 
-.movie-showtimes .loading, .movie-showtimes .error {
+.movie-showtimes .loading,
+.movie-showtimes .error {
     text-align: center;
     font-size: var(--font-size-medium);
     color: var(--accent-color);
     margin-top: 20px;
 }
 
+/* Responsiivisuus */
 @media (max-width: 992px) {
     .movie-showtimes .movie-card {
-        width: calc(33.33% - 16px); /* 3 per row on medium screens */
+        width: calc(33.33% - 16px); 
     }
 }
 
 @media (max-width: 768px) {
     .movie-showtimes .movie-card {
-        width: calc(50% - 16px); /* 2 per row on small screens */
-    
-
-    .movie-showtimes h1, .movie-showtimes label, .movie-showtimes .loading, .movie-showtimes .error {
-        font-size: var(--font-size-large);
+        width: calc(50% - 16px); 
     }
-}
 }
 
 @media (max-width: 576px) {
     .movie-showtimes .movie-card {
-        width: 100%; /* Stack vertically on extra-small screens */
-    
+        width: 100%; 
     }
 }
+
+.filter-box input[type="date"] {
+    padding: 10px 15px;
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: var(--font-size-medium);
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    transition: border-color 0.3s;
+    appearance: none; 
+}
+
+.filter-box input[type="date"]:focus {
+    border-color: var(--accent-color);
+}
+
+.filter-box input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.filter-box input[type="date"]:hover {
+    border-color: var(--accent-color);
+}
+
+.filter-box input[type="date"]:not(:focus) {
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+}
+

@@ -17,6 +17,7 @@ const parseXML = xml => {
     const link = show.getElementsByTagName('ShowURL')[0].textContent
     const poster = show.getElementsByTagName('EventLargeImagePortrait')[0].textContent
 
+
     movies.push({
       title,
       showtime,
@@ -33,7 +34,7 @@ const parseXML = xml => {
   return movies
 }
 
-export const fetchShowtimes = async (date) => {
-  const response = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=1018&dt=${date}`)
+export const fetchShowtimes = async (date, area) => {
+  const response = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=${area}&dt=${date}`)
   return parseXML(response.data)
 }

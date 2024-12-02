@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../styles/Login.css';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ export default function Signup() {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-
+    const navigate = useNavigate();
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
@@ -34,12 +34,13 @@ export default function Signup() {
 
         try {
             const response = await axios.post('https://moviexplorer.site/register', {
-                username: formData.username, // Käyttäjänimi lähetetään
+                username: formData.username, 
                 email: formData.email,
                 password: formData.password
             });
-            setSuccess(JSON.stringify(response.data));
+            setSuccess('Registration successful! Redirecting to login...');
             setError('');
+            setTimeout(() => navigate('/login'), 2000); 
         } catch (err) {
             setError(err.response?.data || 'An error occurred');
         }
