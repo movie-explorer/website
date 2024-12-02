@@ -6,7 +6,8 @@ import axios from 'axios';
 import FavoriteList from "../components/FavoriteList.js";
 
 function ProfilePage() {
-    const { user, token, logout } = useUser();
+    const { token, logout } = useUser();
+    const [userData, setUserData] = useState(null);
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -29,17 +30,19 @@ function ProfilePage() {
                 });
                 const { username, email, created_at } = response.data;
 
-                user.username = username;
-                user.email = email;
-                user.createdAt = created_at;
+                setUserData({
+                    username,
+                    email,
+                    createdAt: created_at,
+                });
             } catch (error) {
                 console.error('Error fetching user data:', error);
-                setError('Well this is embarrassing, we could not fetch your profile data.');
+                setError('Failed to load user data. Please try again later.');
             }
         };
 
         fetchUserData();
-    }, [token, navigate, user]);
+    }, [token, navigate]);
 
     const handleDeleteAccount = async () => {
         if (window.confirm("This action cannot be undone")) {
@@ -56,7 +59,7 @@ function ProfilePage() {
                 }
             } catch (error) {
                 console.error('Error deleting account:', error);
-                setError('Could not delete your account.');
+                setError('Could not delete your account. Please try again later.');
             }
         }
     };
@@ -79,7 +82,7 @@ function ProfilePage() {
             }
         } catch (error) {
             console.error("Error changing password:", error);
-            setError("Failed to change password.");
+            setError(error.response?.data?.message || "Failed to change password.");
         }
     };
 
@@ -87,16 +90,16 @@ function ProfilePage() {
         return <div>{error}</div>;
     }
 
-    if (!user) {
+    if (!userData) {
         return <div>Loading...</div>;
     }
 
     return (
         <div className="profilePageContainer">
             <div className="accountInformation">
-                <p><strong>Name:</strong> {user.username}</p>
-                <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Account created:</strong> {user.createdAt}</p>
+                <p><strong>Name:</strong> {userData.username}</p>
+                <p><strong>Email:</strong> {userData.email}</p>
+                <p><strong>Account created:</strong> {userData.createdAt}</p>
             </div>
 
             <div className="accountSettings">
@@ -108,7 +111,7 @@ function ProfilePage() {
 
             <div className="favorites-section">
                 <h3>Favorite Movies</h3>
-                <FavoriteList/>
+                <FavoriteList />
             </div>
 
             <div className="dangerZone">
