@@ -80,6 +80,7 @@
 .movie-info-poster {
     width: 100%;
     height: 240px;
+    cursor: pointer;
 }
 
 .movie-details {
