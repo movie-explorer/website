@@ -1,113 +1,121 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import "../styles/FavoriteList.css";
 import { useUser } from "./UserProvider.js";
+import { useNavigate } from "react-router-dom";
 
-export function fetchFavoriteMovies(token) {
-    return axios.get("https://moviexplorer.site/favorites", {
-        headers: {
-            Authorization: token,
-        },
-    });
-}
+export const addFavorite = async (movieID, token, setError) => {
+    if (!token) {
+        setError("User not authenticated");
+        return;
+    }
 
-export function addFavorite(movieID, token) {
-    return axios.post(
-        "https://moviexplorer.site/favorites",
-        { movieID: movieID },
-        {
-            headers: {
-                Authorization: token,
-            },
+    try {
+        const response = await axios.post(
+            "https://moviexplorer.site/favorites/",
+            JSON.stringify({ movieID: parseInt(movieID) }),
+            {
+                headers: {
+                    Authorization: token,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        if (response.status === 200) {
+            return response.data.message;
         }
-    );
-}
+    } catch (err) {
+        if (err.response) {
+            if (err.response.status === 400) {
+                setError("Invalid movie ID");
+            } else if (err.response.status === 500) {
+                setError("Server error occurred");
+            } else {
+                setError(`Error: ${err.response.data.error || 'Unknown error'}`);
+            }
+        } else {
+            setError("Error adding favorite");
+        }
+        console.error(err);
+        return null;
+    }
+};
 
-export function removeFavorite(movieID, token) {
-    return axios.delete(`https://moviexplorer.site/favorites/${movieID}`, {
-        headers: {
-            Authorization: token,
-        },
-    });
-}
-
-export default function FavoriteList() {
-    const [favoriteMovies, setFavoriteMovies] = useState([]);
+const FavoriteList = () => {
+    const { user, token } = useUser();
+    const [favorites, setFavorites] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const { token } = useUser();
+    const navigate = useNavigate();
 
-    const loadUserFavorites = async () => {
-        if (!token) return;
+    // This list really tells a lot about the user. We should probably keep it private.
+    const fetchFavoriteMovies = useCallback(async () => {
+        if (!user || !token) {
+            setError("User not authenticated");
+            navigate("/login");
+            return;
+        }
 
         setIsLoading(true);
         try {
-            const response = await fetchFavoriteMovies(token);
-            const movies = Array.isArray(response.data) ? response.data : [];
-            setFavoriteMovies(movies);
-            setError(null);
-        } catch (error) {
-            console.error('Error fetching favorites:', error);
-            setError("Failed to load favorites");
-            setFavoriteMovies([]);
+            const response = await axios.get("https://moviexplorer.site/favorites", {
+                headers: {
+                    Authorization: token,
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.status === 200) {
+                setFavorites(response.data.favorites || []);
+                setError(null);
+            }
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 500) {
+                    setError("Server error occurred");
+                } else {
+                    setError(err.response.data.error || "Error fetching favorites");
+                }
+            } else {
+                setError("Error connecting to server");
+            }
+            console.error(err);
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [user, token, navigate]);
 
     useEffect(() => {
-        loadUserFavorites();
-    }, [token]);
-
-    const handleRemoveFavorite = async (movieID) => {
-        if (!token) return;
-
-        try {
-            await removeFavorite(movieID, token);
-            setFavoriteMovies(prevMovies =>
-                prevMovies.filter(movie => movie.movieID !== movieID)
-            );
-            setError(null);
-        } catch (error) {
-            console.error("Error removing favorite:", error);
-            setError("Failed to remove favorite");
+        if (user && token) {
+            fetchFavoriteMovies();
         }
-    };
+    }, [user, token, fetchFavoriteMovies]);
 
-    if (isLoading) {
-        return <div>Loading favorites...</div>;
+    // no ticket? no favorites!
+    if (!user || !token) {
+        return <p>Please log in to view your favorites</p>;
     }
 
-    if (error) {
-        return (
-            <div>
-                <p>Error: {error}</p>
-                <button onClick={loadUserFavorites}>Try Again</button>
-            </div>
-        );
+    if (isLoading) {
+        return <p>Loading your favorites...</p>;
     }
 
     return (
-        <div className="favorites-list">
-            {favoriteMovies.length === 0 ? (
-                <p>No favorite movies yet</p>
+        <div>
+            {error && <p className="error-message">{error}</p>}
+            {favorites.length === 0 ? (
+                <p>No favorites yet!</p>
             ) : (
                 <ul>
-                    {favoriteMovies.map((movie) => (
-                        <li key={movie.movieID} className="favorite-item">
-                            <div className="movie-info">
-                                <span>{movie.title}</span>
-                                <button
-                                    onClick={() => handleRemoveFavorite(movie.movieID)}
-                                    className="remove-button"
-                                >
-                                    Remove
-                                </button>
-                            </div>
+                    {favorites.map((movie) => (
+                        <li key={movie.movieID}>
+                            {movie.title}
                         </li>
                     ))}
                 </ul>
             )}
         </div>
     );
-}
+};
+
+export default FavoriteList;
