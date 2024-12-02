@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../components/UserProvider.js';
-import { addFavorite, removeFavorite } from '../components/FavoriteList.js';
+import { addFavorite } from '../components/FavoriteList.js';
 import axios from 'axios';
 import Modal from 'react-modal';
 import '../styles/MovieInfo.css';
@@ -92,12 +92,14 @@ function MovieInfo() {
         if (!token) return;
 
         try {
-            if (favoriteMovies.includes(movie.id)) {
-                await removeFavorite(movie.id, token);
-                setFavoriteMovies(prev => prev.filter(id => id !== movie.id));
-            } else {
-                await addFavorite(movie.id, token);
-                setFavoriteMovies(prev => [...prev, movie.id]);
+            const message = await addFavorite(movie.id, token, setError);
+
+            if (message) {
+                setFavoriteMovies(prev =>
+                    prev.includes(movie.id)
+                        ? prev
+                        : [...prev, movie.id]
+                );
             }
         } catch (error) {
             console.error("Error toggling favorite:", error);
