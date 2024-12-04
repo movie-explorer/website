@@ -1,29 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useUser } from '../components/UserProvider.js';
 import '../styles/ReviewForm.css';
 
-const ReviewForm = () => {
+const ReviewForm = ({ movieId }) => {  // Accept movieId as a prop
+    const { user, token } = useUser();
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviews, setReviews] = useState([]);
+    const [userData, setUserData] = useState({ email: '' });
 
-    const handleSubmit = (e) => {
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get('https://moviexplorer.site/profile', {
+                headers: {
+                    Authorization: token,
+                },
+            });
+            const { email } = response.data;
+            setUserData({ email });
+            fetchUserReviews(email); 
+        } catch (error) {
+            console.error('Error fetching user data:', error.response?.data || error.message);
+        }
+    };
+
+    const fetchUserReviews = async (email) => {
+        try {
+            const response = await axios.get(`https://moviexplorer.site/review?email=${email}`);
+            const userReviews = response.data.reviews;
+
+            const filteredReviews = userReviews.filter(a => a.movied == movieId);
+            setReviews(filteredReviews); 
+        } catch (error) {
+            console.error('Error fetching user reviews:', error.response?.data || error.message);
+        }
+    };
+
+    useEffect(() => {
+        if (user && token) {
+            fetchUserData();
+        }
+    }, [user, token, movieId]);  // Re-fetch reviews when movieId changes
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Create a new review object
         const newReview = {
-            username: 'Anonymous', // Default username
-            reviewText,
+            email: userData.email || '',
+            movieID: movieId, 
             rating,
-            date: new Date().toLocaleString(),
+            text: reviewText,
         };
 
-        // Update reviews state by adding the new review
-        setReviews([...reviews, newReview]);
-
-        // Reset the form
-        setReviewText('');
-        setRating(0);
+        try {
+            const response = await axios.post('https://moviexplorer.site/review', newReview, {
+                headers: {
+                    Authorization: token,
+                },
+            });
+            alert(response.data.message);
+            setReviewText('');
+            setRating(0);
+            fetchUserReviews(userData.email);  
+        } catch (error) {
+            alert(error.response?.data?.error || 'Failed to submit review.');
+        }
     };
 
     return (
@@ -57,28 +100,28 @@ const ReviewForm = () => {
             </form>
 
             <div className="reviews">
-    {reviews.length === 0 ? (
-        <p>No reviews yet. Be the first to review!</p>
-    ) : (
-        reviews.map((review, index) => (
-            <div key={index} className="review">
-                <h3>{review.username || "Anonymous"}</h3>
-                <p>{review.reviewText}</p>
-                <div className="review-rating">
-                    {[...Array(5)].map((star, idx) => (
-                        <span
-                            key={idx}
-                            className={`star ${idx < review.rating ? 'on' : 'off'}`}
-                        >
-                            &#9733;
-                        </span>
-                    ))}
-                </div>
-                <small>{review.date}</small>
+                {reviews.length === 0 ? (
+                    <p>No reviews yet for this movie. Be the first to review!</p>
+                ) : (
+                    reviews.map((review, index) => (
+                        <div key={index} className="review">
+                            <h3>{review.email}</h3>
+                            <p>{review.text}</p>
+                            <div className="review-rating">
+                                {[...Array(5)].map((star, idx) => (
+                                    <span
+                                        key={idx}
+                                        className={`star ${idx < review.rating ? 'on' : 'off'}`}
+                                    >
+                                        &#9733;
+                                    </span>
+                                ))}
+                            </div>
+                            <small>{new Date(review.createdAt).toLocaleString()}</small>
+                        </div>
+                    ))
+                )}
             </div>
-        ))
-    )}
-</div>
         </div>
     );
 };
