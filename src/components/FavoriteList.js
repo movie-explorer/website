@@ -3,7 +3,7 @@ import axios from "axios";
 import { useUser } from "./UserProvider.js";
 import { useNavigate } from "react-router-dom";
 
-export const addFavorite = async (movieID, token, setError) => {
+export const addFavorite = async (movieID, token, setError, title) => {
     if (!token) {
         setError("User not authenticated");
         return;
@@ -11,8 +11,8 @@ export const addFavorite = async (movieID, token, setError) => {
 
     try {
         const response = await axios.post(
-            "https://moviexplorer.site/favorites/",
-            JSON.stringify({ movieID: parseInt(movieID) }),
+            "https://moviexplorer.site/favorites",
+            JSON.stringify({ movieID: parseInt(movieID), title: title }),
             {
                 headers: {
                     Authorization: token,
