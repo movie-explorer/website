@@ -84,12 +84,19 @@ function MovieInfo() {
     });
 
     const handleAddToFavorites = async (movie) => {
-        console.log(movie)
-        const message = await addFavorite(movie.id, token, setFavError, movie.name);
+        const updatedMovies = movies.map((item) =>
+            item.id === movie.id
+                ? { ...item, isFavorite: !item.isFavorite }
+                : item
+        );
+        setMovies(updatedMovies);
+    
+        const message = await addFavorite(movie.id, token, setFavError, movie.name ?? movie.title);
         if (message) {
             alert("Movie added to favorites!");
         }
     };
+    
 
     return (
         <div className="movie-info-container">
@@ -152,33 +159,53 @@ function MovieInfo() {
 
             {filteredMovies.length > 0 && (
                 <div className="movies-section">
-                    {filteredMovies.map((movie) => (
-                        <div key={movie.id} className="movie-info-card">
-                            <img
-                                src={movie.poster_path
-                                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                                    : noPhotoPoster
-                                }
-                                alt={movie.title || movie.name}
-                                className="movie-info-poster"
-                                onClick={() => openModal(movie)}  
-                            />
-                            <div className="movie-details">
-                                <h2 className="movie-title">{movie.title || movie.name}</h2>
-                                <p className="movie-text">
-                                    {movie.release_date || movie.first_air_date
-                                        ? new Date(movie.release_date || movie.first_air_date).toLocaleDateString('fi-FI')
-                                        : 'N/A'}
-                                </p>
-                                <button
-                                    className="add-to-favorites-button"
-                                    onClick={() => handleAddToFavorites(movie)}
-                                >
-                                    Add to Favorites
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                   {filteredMovies.map((movie) => (
+    <div key={movie.id} className="movie-info-card">
+        <img
+            src={movie.media_type === 'person' && movie.profile_path
+                ? `https://image.tmdb.org/t/p/w500${movie.profile_path}`
+                : movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : noPhotoPoster
+            }
+            alt={movie.title || movie.name}
+            className="movie-info-poster"
+            onClick={() => openModal(movie)}
+        />
+        <div className="movie-details">
+            <h2 className="movie-title">{movie.title || movie.name}</h2>
+            {movie.media_type === 'person' ? (
+                <>
+                    <p className="movie-text">Known for: {movie.known_for_department || 'N/A'}</p>
+                    <p className="movie-text">Type: {movie.media_type.toUpperCase()}</p>
+                </>
+            ) : (
+                <>
+                    <p className="movie-text">
+                        Release Date:{' '}
+                        {movie.release_date || movie.first_air_date
+                            ? new Date(movie.release_date || movie.first_air_date).toLocaleDateString('fi-FI')
+                            : 'N/A'}
+                    </p>
+                    <p className="movie-text">Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}/10</p>
+                    <p className="vote-count">
+                        {movie.vote_count ? `(${movie.vote_count} votes)` : ''}
+                    </p>
+                    <p className="movie-text">Language: {movie.original_language?.toUpperCase() || 'N/A'}</p>
+                    <p className="movie-text">Type: {movie.media_type.toUpperCase()}</p>
+                    <button
+                        className={`favorite-button ${movie.isFavorite ? 'favorite' : ''}`}
+                        onClick={() => handleAddToFavorites(movie)}
+                    >
+                        ★
+                    </button>
+                </>
+            )}
+        </div>
+    </div>
+))}
+
+
                 </div>
             )}
 

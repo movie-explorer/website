@@ -110,7 +110,7 @@ function ProfilePage() {
             </div>
 
             <div className="favorites-section">
-                <h3>Favorite Movies</h3>
+                <h3>Favorite movies</h3>
                 <FavoriteList />
             </div>
 

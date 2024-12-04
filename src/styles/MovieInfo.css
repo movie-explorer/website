@@ -215,11 +215,12 @@ p {
 }
 
 .favorite-button.favorite {
-    color: orange;  
+    color: yellow; 
 }
 
 .favorite-button:focus {
     outline: none;
 }
+
 
 
