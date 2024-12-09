@@ -6,10 +6,10 @@ import CreateGroup from './CreateGroup.js';
 import GroupDetail from './GroupDetail.js';
 
 export default function Group() {
-    const [groups, setGroups] = useState([]); // Holds all groups in the app
-    const [selectedGroup, setSelectedGroup] = useState(null); // Holds the currently selected group
+    const [groups, setGroups] = useState([]); 
+    const [selectedGroup, setSelectedGroup] = useState(null); 
 
-    // Create a new group and add it to the groups state
+
     const handleCreateGroup = (groupName) => {
         if (groupName.trim() === '') {
             alert('Group name cannot be empty.');
@@ -20,16 +20,16 @@ export default function Group() {
         setSelectedGroup(newGroup);
     };
 
-    // Select a group from the list
+    
     const handleSelectGroup = (group) => {
-        setSelectedGroup(group); // Update selected group state
+        setSelectedGroup(group); 
     };
 
-    // Remove a group based on its unique ID
+    
     const handleRemoveGroup = (groupId) => {
         const updatedGroups = groups.filter((group) => group.id !== groupId);
-        setGroups(updatedGroups); // Update the groups list state
-        setSelectedGroup(null); // Deselect the group
+        setGroups(updatedGroups);
+        setSelectedGroup(null); 
     };
 
     return (
