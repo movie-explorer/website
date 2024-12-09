@@ -67,6 +67,23 @@
 .dangerZone {
     text-align: center;
 }
+.shareFavorites {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.shareFavorites a {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.shareFavorites a:hover {
+    color: #0056b3;
+}
+
 /* Modal styling */
 .modal {
     position: fixed;
