@@ -21,24 +21,39 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const response = await axios.post('https://moviexplorer.site/login', {
-                username: formData.username, // Käyttäjätunnus käytetään nyt
+                username: formData.username,
                 password: formData.password
             });
-
+    
             const userData = response.data;
             const authToken = userData.token;
-
+    
             login(userData, authToken); 
             setSuccess('Login successful');
-            setError('');
+            setError(''); 
             navigate('/');
+    
         } catch (err) {
-            setError(err.response?.data || 'An error occurred');
+            if (err.response && err.response.data) {
+                const errorData = err.response.data;
+ 
+                if (errorData.username) {
+                    setError('Incorrect username');
+                } else if (errorData.password) {
+                    setError('Incorrect password');
+                } else {
+                    setError('Incorrect password or username');
+                }
+            } else {
+                setError('An error occurred');
+            }
         }
     };
+    
+    
 
     return (
         <div className="auth-container">
