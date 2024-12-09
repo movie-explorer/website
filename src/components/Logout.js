@@ -30,7 +30,7 @@ export default function Logout() {
             setTimeout(() => {
                 setLogoutMessage(false); 
                 navigate('/'); 
-            }, 3000);
+            }, 500);
     
         } catch (err) {
             console.error('Logout epäonnistui:', err);
@@ -47,7 +47,7 @@ export default function Logout() {
             setTimeout(() => {
                 setLogoutMessage(false); 
                 navigate('/'); 
-            }, 3000);
+            }, 500);
         }
     };
 
