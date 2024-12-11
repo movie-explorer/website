@@ -1,0 +1,32 @@
+.error-page {
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+}
+
+.error-page h1 {
+    font-size: 5rem;
+    margin: 0;
+    font-weight: bold;
+    color: #ff6347;
+}
+
+.error-page h2 {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    font-weight: 400;
+    color: #f0f0f0;
+}
+
+.error-page img {
+    margin-top: 20px;
+    max-width: 60%;
+    max-height: 300px;
+    border-radius: 8px;
+}
