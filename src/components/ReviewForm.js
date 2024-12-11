@@ -26,7 +26,7 @@ const ReviewForm = ({ movieId }) => {
         }
     };
 
-    const fetchUserReviews = async (email) => {
+    const fetchUserReviews = async () => {
         try {
             const response = await axios.get('https://moviexplorer.site/review');
             const userReviews = response.data.reviews;
