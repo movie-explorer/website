@@ -29,14 +29,15 @@ export default function Header() {
             });
 
             console.log('Logout-pyyntö onnistui:', response.data);
-
             logout();
             setLogoutMessage(true);
-
+            
             setTimeout(() => {
                 setLogoutMessage(false); 
-                navigate('/'); 
-            }, 3000);
+            }, 3000); 
+            
+            navigate('/'); 
+            
         } catch (err) {
             console.error('Logout epäonnistui:', err.response ? err.response.data : err.message);
             logout(); 
@@ -45,7 +46,7 @@ export default function Header() {
             setTimeout(() => {
                 setLogoutMessage(false); 
                 navigate('/'); 
-            }, 3000);
+            }, 100);
         }
     };
 

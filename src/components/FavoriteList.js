@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useUser } from './UserProvider.js';
 import { useNavigate } from 'react-router-dom';
+import '../styles/FavoriteList.css';
 
 export const addFavorite = async (movieID, token, setError, title) => {
 	if (!token) {
@@ -135,18 +136,28 @@ const FavoriteList = () => {
 			{favorites.length === 0 ? (
 				<p>No favorites yet!</p>
 			) : (
-				<ul>
-					{favorites.map((movie) => (
-						<li key={movie.movieid}>
-							{movie.title}
-							<button
-								onClick={() => handleDeleteFavorite(movie.movieid)}
-								style={{ marginLeft: '10px', color: 'red' }}>
-								Delete
-							</button>
-						</li>
-					))}
-				</ul>
+				<table className="favorites-table">
+					<thead>
+						<tr>
+							<th>Movie:</th>
+							<th>Delete from list:</th>
+						</tr>
+					</thead>
+					<tbody>
+						{favorites.map((movie) => (
+							<tr key={movie.movieid}>
+								<td>{movie.title}</td>
+								<td>
+									<button
+										onClick={() => handleDeleteFavorite(movie.movieid)}
+										className="remove-button">
+										Delete
+									</button>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
 			)}
 		</div>
 	);
