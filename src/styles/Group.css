@@ -32,16 +32,77 @@
     margin-bottom: 20px;
   }
   
-  .group-name {
-    font-weight: bold;
+  .group-table {
+    width: 100%;
+    border-collapse: collapse;
   }
   
+  .group-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px; 
+    overflow: hidden; 
+}
+
+.group-table th, .group-table td {
+    padding: 12px 15px; 
+    text-align: left;
+    border: 1px solid #444; 
+}
+
+.group-table th {
+    background-color: #2c2c2c; 
+    color: #fff;
+    font-size: 16px; 
+    font-weight: bold; 
+}
+
+.group-table tr {
+    background-color: #1c1c1c; 
+}
+
+.group-table tr:nth-child(even) {
+    background-color: #333; 
+}
+
+.group-table tr:hover {
+    background-color: #444; 
+}
+
+.group-table td {
+    font-size: 14px; 
+    color: #f1f1f1; 
+}
+
+.group-table .button {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.group-table .button.remove {
+    background-color: #f44336;
+}
+
+.group-table .button:hover {
+    opacity: 0.85; 
+}
+
+.group-table td .button {
+    margin: 0;
+}
+ 
   .group-details-section {
     background-color: #1c1c1c;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative; 
   }
   
   .group-details-section h3 {
@@ -113,5 +174,17 @@
   .error-message {
     color: red;
     font-weight: bold;
+  }
+
+  .delete-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
   }
   
