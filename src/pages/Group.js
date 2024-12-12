@@ -20,7 +20,6 @@ function GroupPage() {
   const [inviteCode, setInviteCode] = useState(""); // Invite code state
   const [inviteCodeToJoin, setInviteCodeToJoin] = useState(""); // State for joining a group with invite code
 
-  // Fetch user groups on component mount and after group creation
   const fetchUserGroups = async () => {
     try {
       const response = await axios.get(`${API_URL}/groups`, {
@@ -40,7 +39,6 @@ function GroupPage() {
     }
   };
 
-  // Fetch group details (members and movies) based on group ID from URL params
   const fetchGroupDetails = async (groupId) => {
     try {
       const response = await axios.get(`${API_URL}/groups?groupid=${groupId}`, {
@@ -112,7 +110,7 @@ function GroupPage() {
       alert("Error adding movie to the group. Please try again.");
     }
   };
-  // Create a new group
+
   const handleCreateGroup = async (e) => {
     e.preventDefault();
     try {
@@ -141,7 +139,6 @@ function GroupPage() {
     }
   };
 
-  // Delete a group
   const handleDeleteGroup = async (groupId) => {
     try {
       const response = await axios.delete(`${API_URL}/groups`, {
@@ -163,13 +160,11 @@ function GroupPage() {
     }
   };
 
-  // Search movies handler
   const handleSearch = (e) => {
     e.preventDefault();
     searchMovies();
   };
 
-  // Fetch movies from TMDB
   const searchMovies = async () => {
     if (!searchQuery) return;
 
@@ -245,7 +240,6 @@ function GroupPage() {
   useEffect(() => {
     fetchUserGroups();
 
-    // Check if there's a groupid in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const groupId = urlParams.get("groupid");
     if (groupId) {
@@ -258,7 +252,6 @@ function GroupPage() {
     <div className="group-page">
       <h2>Manage Groups and Movies</h2>
 
-      {/* Create Group */}
       <form onSubmit={handleCreateGroup} className="create-group-form">
         <input
           type="text"
@@ -321,7 +314,6 @@ function GroupPage() {
         </div>
       )}
 
-      {/* Show Group Details when a group is selected */}
       {selectedGroup && groupDetails && (
         <div className="group-details-section">
           <h3>Group Details</h3>
@@ -365,7 +357,7 @@ function GroupPage() {
                 <li key={movie.tmdbid} className="movie-item">
                   <span className="movie-name">{movie.name}</span>
                   <span className="movie-watchdate">
-                  <br></br>
+                    <br />
                     Watch Date: {new Date(movie.watchdate).toLocaleString()}
                   </span>
                 </li>
@@ -378,10 +370,19 @@ function GroupPage() {
           <button className="button" onClick={() => setGroupDetails(null)}>
             Add Movie to Group
           </button>
+
+          <button
+            className="delete-button"
+            onClick={async () => {
+              await handleDeleteGroup(selectedGroup);
+              window.location = `/group`;
+            }}
+          >
+            Delete Group
+          </button>
         </div>
       )}
 
-      {/* Show Add Movie Section when a group is selected */}
       {selectedGroup && !groupDetails && (
         <div className="add-movie-section">
           <h3>Add Movies to Group</h3>
