@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useUser } from '../components/UserProvider.js';
 import '../styles/ReviewForm.css';
 
-const ReviewForm = ({ movieId }) => {  // Accept movieId as a prop
+const ReviewForm = ({ movieId }) => {
     const { user, token } = useUser();
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState(0);
@@ -26,9 +26,9 @@ const ReviewForm = ({ movieId }) => {  // Accept movieId as a prop
         }
     };
 
-    const fetchUserReviews = async (email) => {
+    const fetchUserReviews = async () => {
         try {
-            const response = await axios.get(`https://moviexplorer.site/review?email=${email}`);
+            const response = await axios.get('https://moviexplorer.site/review');
             const userReviews = response.data.reviews;
 
             const filteredReviews = userReviews.filter(a => a.movied == movieId);
@@ -42,7 +42,7 @@ const ReviewForm = ({ movieId }) => {  // Accept movieId as a prop
         if (user && token) {
             fetchUserData();
         }
-    }, [user, token, movieId]);  // Re-fetch reviews when movieId changes
+    }, [user, token, movieId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -105,7 +105,11 @@ const ReviewForm = ({ movieId }) => {  // Accept movieId as a prop
                 ) : (
                     reviews.map((review, index) => (
                         <div key={index} className="review">
-                            <h3>{review.email}</h3>
+                            <h3>
+                                <div className="review-user-email">
+                                    {review.email} {/* Displaying the reviewer’s email */}
+                                </div>
+                            </h3>
                             <p>{review.text}</p>
                             <div className="review-rating">
                                 {[...Array(5)].map((star, idx) => (

@@ -120,3 +120,8 @@
     background: var(--input-border);
     border-radius: 10px;
 }
+.review-user-email {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #d1d1e0;
+}

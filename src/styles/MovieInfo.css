@@ -3,6 +3,7 @@
     max-width: 900px;
     margin: auto;
     padding: 20px;
+    color: #fff;
 }
 
 .movie-info-header {
@@ -29,16 +30,16 @@
     padding: 10px;
     flex: 1;
     border-radius: 5px;
-    border: 1px solid #333;
-    background-color: #333;
+    border: 1px solid #444;
+    background-color: #222;
     color: #fff;
     font-size: 1rem;
 }
 
 .movie-info-search-button {
     padding: 10px 15px;
-    background-color: #bb8af7;
-    color: black;
+    background-color: #bb86fc;
+    color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 1rem;
@@ -46,16 +47,16 @@
 }
 
 .movie-info-search-button:hover {
-    background-color: #9b67f2;
+    background-color: #bb86fc;
 }
 
 .movie-info-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .error-message {
-    color: red;
+    color: #ff3b30;
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
@@ -69,12 +70,13 @@
 }
 
 .movie-info-card {
-    border: 1px solid #333;
+    border: 1px solid #444;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #1f1f1f;
+    background-color: #2b2b2b;
+    position: relative;
 }
 
 .movie-info-poster {
@@ -96,10 +98,10 @@
 
 .movie-text {
     margin: 4px 0;
-    color: #666;
+    color: #bbb;
 }
 
-.movie-info-pagination {
+.pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,9 +109,9 @@
     gap: 10px;
 }
 
-.movie-info-pagination-button {
+.pagination button {
     padding: 8px 12px;
-    background-color: #bb8af7;
+    background-color: #bb86fc;
     color: white;
     border: none;
     border-radius: 5px;
@@ -118,16 +120,16 @@
     margin: 0 5px;
 }
 
-.movie-info-pagination-button:hover {
-    background-color: #9b67f2;
+.pagination button:hover {
+    background-color: #3700b3;
 }
 
-.movie-info-pagination-button:disabled {
+.pagination button:disabled {
     background-color: #444;
     cursor: not-allowed;
 }
 
-.pagination-info {
+.pagination span {
     font-size: 1.1rem;
     color: #bbb;
 }
@@ -139,7 +141,7 @@ p {
 }
 
 .vote-count {
-    color: #666;
+    color: #bbb;
     font-size: 0.8em;
 }
 
@@ -196,10 +198,7 @@ p {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-}
-
-.movie-info-card {
-    position: relative;
+    margin-top: 10px;
 }
 
 .favorite-button {
@@ -209,17 +208,15 @@ p {
     background: none;
     border: none;
     font-size: 35px;
-    color: white;  
+    color: #fff;
     cursor: pointer;
     transition: color 0.2s ease-in-out;
 }
 
 .favorite-button.favorite {
-    color: orange;  
+    color: #ffd700;
 }
 
 .favorite-button:focus {
     outline: none;
 }
-
-

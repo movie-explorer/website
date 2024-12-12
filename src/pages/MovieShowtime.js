@@ -32,24 +32,24 @@ const MovieShowtimes = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [date, setDate] = useState('01.11.2024'); // Default date
-  const [selectedTheater, setSelectedTheater] = useState(1018); // Default theater ID (Oulu: PLAZA)
+  const [date, setDate] = useState('16.12.2024'); 
+  const [selectedTheater, setSelectedTheater] = useState(1018); 
 
   const handleDateChange = (event) => {
     setDate(event.target.value);
   };
 
   const handleTheaterChange = (event) => {
-    setSelectedTheater(parseInt(event.target.value, 10)); // Convert string to number
+    setSelectedTheater(parseInt(event.target.value, 10)); 
   };
 
   const loadShowtimes = async () => {
     setLoading(true);
     setError(null);
-    console.log("Selected Theater ID:", selectedTheater); // Varmistetaan, että teatterin ID on oikein
+    console.log("Selected Theater ID:", selectedTheater);
     try {
       const moviesArray = await fetchShowtimes(date, selectedTheater);
-      console.log("Movies Loaded:", moviesArray); // Näytetään elokuvat konsolissa
+      console.log("Movies Loaded:", moviesArray); 
       setMovies(moviesArray);
     } catch (err) {
       setError(err.message);
