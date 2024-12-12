@@ -66,7 +66,7 @@ function GroupPage() {
         },
         data: {
           groupid: selectedGroup,
-          username: memberUsername, // Member to remove
+          username2: memberUsername, // Member to remove
         },
       });
 
