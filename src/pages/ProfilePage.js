@@ -128,7 +128,6 @@ function ProfilePage() {
             </div>
 
             <div className='share-section'>
-                <h3>Share your favorites</h3>
                 <a href={`/share-favorites?username=${userData.username}`} target="_blank" rel="noopener noreferrer">
                     Share your favorites
                 </a>
