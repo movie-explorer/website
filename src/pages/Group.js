@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useUser } from "../components/UserProvider.js";
 import "../styles/Group.css";
+import noPhotoPoster from "../media/noPhotoPoster.png";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const API_URL = "https://moviexplorer.site";
@@ -249,183 +250,188 @@ function GroupPage() {
   }, [token]);
 
   return (
-    <div className="group-page">
-      <h2>Manage Groups and Movies</h2>
+      <div className="group-page">
+        <h2 className="group-h2">Manage Groups and Movies</h2>
 
-      <form onSubmit={handleCreateGroup} className="create-group-form">
-        <input
-          type="text"
-          value={newGroupName}
-          onChange={(e) => setNewGroupName(e.target.value)}
-          placeholder="Enter new group name"
-          className="create-group-input"
-        />
-        <button type="submit" className="button">
-          Create Group
-        </button>
-      </form>
-
-      {/* Section for Joining a Group with Invite Code */}
-      <div className="join-group-section">
-        <h3>Join Group with Invite Code</h3>
-        <form onSubmit={handleJoinGroup}>
+        <form onSubmit={handleCreateGroup} className="create-group-form">
           <input
-            type="text"
-            value={inviteCodeToJoin}
-            onChange={(e) => setInviteCodeToJoin(e.target.value)}
-            placeholder="Enter invite code"
-            className="join-group-input"
+              type="text"
+              value={newGroupName}
+              onChange={(e) => setNewGroupName(e.target.value)}
+              placeholder="Enter new group name"
+              className="create-group-input"
           />
           <button type="submit" className="button">
-            Join Group
+            Create Group
           </button>
         </form>
-      </div>
 
-      {groups.length > 0 && (
-        <div className="group-list">
-          <h3>Your Groups</h3>
-          <table className="group-table">
-            <thead>
-              <tr>
-                <th>Group Name</th>
-                <th>View Group</th>
-              </tr>
-            </thead>
-            <tbody>
-              {groups.map((group) => (
-                <tr key={group.groupid}>
-                  <td className="group-name">{group.name}</td>
-                  <td>
-                    <button
-                      className="button"
-                      onClick={() => {
-                        window.location.search = `?groupid=${group.groupid}`;
-                        fetchGroupDetails(group.groupid);
-                      }}
-                    >
-                      View Group
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {selectedGroup && groupDetails && (
-        <div className="group-details-section">
-          <h3>Group Details</h3>
-          <p>
-            <strong>Members:</strong>
-          </p>
-          <ul className="group-members-list">
-            {groupDetails.members.map((member) => (
-              <li key={member.username} className="group-member-item">
-                {member.username}
-                {member.isowner && <strong> (Owner)</strong>}
-                {!member.isowner && (
-                  <button
-                    className="remove-member-button"
-                    onClick={() => handleRemoveMember(member.username)}
-                  >
-                    Remove
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          <button
-            className="button"
-            onClick={handleGenerateInviteCode} // Invite code generation button
-          >
-            Generate Invite Code
-          </button>
-
-          {inviteCode && (
-            <div className="invite-code-section">
-              <p>Invite Code: {inviteCode}</p>
-            </div>
-          )}
-
-          <h4>Movies in Group:</h4>
-          <ul className="movies-list">
-            {groupDetails.movies.length > 0 ? (
-              groupDetails.movies.map((movie) => (
-                <li key={movie.tmdbid} className="movie-item">
-                  <span className="movie-name">{movie.name}</span>
-                  <span className="movie-watchdate">
-                    <br />
-                    Watch Date: {new Date(movie.watchdate).toLocaleString()}
-                  </span>
-                </li>
-              ))
-            ) : (
-              <p>No movies added yet.</p>
-            )}
-          </ul>
-
-          <button className="button" onClick={() => setGroupDetails(null)}>
-            Add Movie to Group
-          </button>
-
-          <button
-            className="delete-button"
-            onClick={async () => {
-              await handleDeleteGroup(selectedGroup);
-              window.location = `/group`;
-            }}
-          >
-            Delete Group
-          </button>
-        </div>
-      )}
-
-      {selectedGroup && !groupDetails && (
-        <div className="add-movie-section">
-          <h3>Add Movies to Group</h3>
-          <form onSubmit={handleSearch} className="search-bar">
+        {/* Section for Joining a Group with Invite Code */}
+        <div className="join-group-section">
+          <h3>Join Group with Invite Code</h3>
+          <form onSubmit={handleJoinGroup}>
             <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for movies..."
-              className="search-input"
-            />
-            <input
-              type="datetime-local"
-              value={watchDate}
-              onChange={(e) => setWatchDate(e.target.value)}
-              placeholder="Select Watch Date"
+                type="text"
+                value={inviteCodeToJoin}
+                onChange={(e) => setInviteCodeToJoin(e.target.value)}
+                placeholder="Enter invite code"
+                className="join-group-input"
             />
             <button type="submit" className="button">
-              Search
+              Join Group
             </button>
           </form>
-
-          {isLoading && <p>Loading...</p>}
-          {error && <p className="error-message">{error}</p>}
-
-          {movies.length > 0 && (
-            <div className="movies-list">
-              {movies.map((movie) => (
-                <div key={movie.id} className="movie-card">
-                  <h4>{movie.title}</h4>
-                  <button
-                    className="button"
-                    onClick={() => handleAddToGroup(movie, watchDate)}
-                  >
-                    Add to Group
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
-      )}
-    </div>
+
+        {groups.length > 0 && (
+            <div className="group-list">
+              <h3>Your Groups</h3>
+              <table className="group-table">
+                <thead>
+                <tr>
+                  <th>Group Name</th>
+                  <th>View Group</th>
+                </tr>
+                </thead>
+                <tbody>
+                {groups.map((group) => (
+                    <tr key={group.groupid}>
+                      <td className="group-name">{group.name}</td>
+                      <td>
+                        <button
+                            className="button"
+                            onClick={() => {
+                              window.location.search = `?groupid=${group.groupid}`;
+                              fetchGroupDetails(group.groupid);
+                            }}
+                        >
+                          View Group
+                        </button>
+                      </td>
+                    </tr>
+                ))}
+                </tbody>
+              </table>
+            </div>
+        )}
+
+        {selectedGroup && groupDetails && (
+            <div className="group-details-section">
+              <h3>Group Details</h3>
+              <p>
+                <strong>Members:</strong>
+              </p>
+              <ul className="group-members-list">
+                {groupDetails.members.map((member) => (
+                    <li key={member.username} className="group-member-item">
+                      {member.username}
+                      {member.isowner && <strong> (Owner)</strong>}
+                      {!member.isowner && (
+                          <button
+                              className="remove-member-button"
+                              onClick={() => handleRemoveMember(member.username)}
+                          >
+                            Remove
+                          </button>
+                      )}
+                    </li>
+                ))}
+              </ul>
+
+              <button
+                  className="button"
+                  onClick={handleGenerateInviteCode} // Invite code generation button
+              >
+                Generate Invite Code
+              </button>
+
+              {inviteCode && (
+                  <div className="invite-code-section">
+                    <p>Invite Code: {inviteCode}</p>
+                  </div>
+              )}
+
+              <h4>Movies in Group:</h4>
+              <ul className="movies-list">
+                {groupDetails.movies.length > 0 ? (
+                    groupDetails.movies.map((movie) => (
+                        <li key={movie.tmdbid} className="movie-item">
+                          <span className="movie-name">{movie.name}</span>
+                          <span className="movie-watchdate">
+                    <br/>
+                    Watch Date: {new Date(movie.watchdate).toLocaleString()}
+                  </span>
+                        </li>
+                    ))
+                ) : (
+                    <p>No movies added yet.</p>
+                )}
+              </ul>
+
+              <button className="button" onClick={() => setGroupDetails(null)}>
+                Add Movie to Group
+              </button>
+
+              <button
+                  className="delete-button"
+                  onClick={async () => {
+                    await handleDeleteGroup(selectedGroup);
+                    window.location = `/group`;
+                  }}
+              >
+                Delete Group
+              </button>
+            </div>
+        )}
+
+        {selectedGroup && !groupDetails && (
+            <div className="add-movie-section">
+              <h3>Add Movies to Group</h3>
+              <form onSubmit={handleSearch} className="search-bar">
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search for movies..."
+                    className="search-input"
+                />
+                <input
+                    type="datetime-local"
+                    value={watchDate}
+                    onChange={(e) => setWatchDate(e.target.value)}
+                    placeholder="Select Watch Date"
+                />
+                <button type="submit" className="button">
+                  Search
+                </button>
+              </form>
+
+              {isLoading && <p>Loading...</p>}
+              {error && <p className="error-message">{error}</p>}
+
+              {movies.length > 0 && (
+                  <div className="movies-list">
+                    {movies.map((movie) => (
+                        <div key={movie.id} className="movie-card">
+                          <img
+                              src={movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : noPhotoPoster}
+                              alt={`${movie.title} poster`}
+                              className="movie-poster"
+                          />
+                          <h4>{movie.title}</h4>
+                          <button
+                              className="button"
+                              onClick={() => handleAddToGroup(movie, watchDate)}
+                          >
+                            Add to Group
+                          </button>
+                        </div>
+                    ))}
+                  </div>
+              )}
+            </div>
+        )}
+      </div>
   );
 }
 
