@@ -1,137 +1,150 @@
+/* General Layout */
 .group-page {
-    padding: 20px;
+    padding: 30px;
     background-color: #121212;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
+    font-family: 'Arial', sans-serif;
   }
   
+  h2 {
+    text-align: center;
+    color: #f1f1f1;
+    font-size: 30px;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  
+  /* Create Group Form */
   .create-group-form {
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 10px;
+    background-color: #1c1c1c;
+    border-radius: 8px;
   }
   
   .create-group-input {
-    padding: 10px;
-    width: 300px;
-    margin-right: 10px;
+    padding: 12px;
+    width: 350px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #1c1c1c;
+    color: white;
+    font-size: 14px;
+    transition: border-color 0.3s;
+  }
+  
+  .create-group-input:focus {
+    outline: none;
+    border-color: #4caf50;
   }
   
   .button {
-    padding: 10px 15px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .button.remove {
-    background-color: #f44336;
-  }
-  
-  .group-list {
-    margin-bottom: 20px;
-  }
-  
-  .group-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .group-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 8px; 
-    overflow: hidden; 
-}
-
-.group-table th, .group-table td {
-    padding: 12px 15px; 
-    text-align: left;
-    border: 1px solid #444; 
-}
-
-.group-table th {
-    background-color: #2c2c2c; 
-    color: #fff;
-    font-size: 16px; 
-    font-weight: bold; 
-}
-
-.group-table tr {
-    background-color: #1c1c1c; 
-}
-
-.group-table tr:nth-child(even) {
-    background-color: #333; 
-}
-
-.group-table tr:hover {
-    background-color: #444; 
-}
-
-.group-table td {
-    font-size: 14px; 
-    color: #f1f1f1; 
-}
-
-.group-table .button {
-    padding: 5px 10px;
+    padding: 12px 20px;
     background-color: #4caf50;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     font-size: 14px;
-}
-
-.group-table .button.remove {
+    transition: background-color 0.3s ease, opacity 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+    opacity: 0.9;
+  }
+  
+  .button.remove {
     background-color: #f44336;
-}
-
-.group-table .button:hover {
-    opacity: 0.85; 
-}
-
-.group-table td .button {
-    margin: 0;
-}
- 
+  }
+  
+  .button.remove:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Group List */
+  .group-list {
+    margin-bottom: 30px;
+  }
+  
+  .group-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .group-table th, .group-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border: 1px solid #444;
+    font-size: 16px;
+    color: #f1f1f1;
+  }
+  
+  .group-table th {
+    background-color: #2c2c2c;
+    font-weight: 600;
+  }
+  
+  .group-table tr:nth-child(even) {
+    background-color: #333;
+  }
+  
+  .group-table tr:hover {
+    background-color: #444;
+  }
+  
+  .group-table .button {
+    padding: 8px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .group-table .button.remove {
+    background-color: #f44336;
+  }
+  
+  .group-table .button:hover, .group-table .button.remove:hover {
+    opacity: 0.9;
+  }
+  
+  /* Group Details Section */
   .group-details-section {
     background-color: #1c1c1c;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    position: relative; 
   }
   
   .group-details-section h3 {
-    margin-top: 0;
     font-size: 24px;
-    color: #ffffff;
+    color: #fff;
+    margin-top: 0;
   }
   
-  .group-members-list {
+  .group-members-list, .movies-list {
     padding-left: 20px;
+    margin-bottom: 20px;
   }
   
-  .group-member-item {
+  .group-member-item, .movie-item {
     font-size: 16px;
     color: #f1f1f1;
-  }
-  
-  .movies-list {
-    padding-left: 20px;
-  }
-  
-  .movie-item {
-    font-size: 16px;
-    color: #f1f1f1;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   
   .movie-name {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 18px;
   }
   
@@ -140,51 +153,415 @@
     font-size: 14px;
   }
   
+  /* Add Movie Section */
   .add-movie-section {
     background-color: #121212;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
+    margin-bottom: 30px;
   }
   
   .add-movie-section h3 {
+    color: #fff;
     margin-top: 0;
-    color: #ffffff;
+    font-size: 22px;
+    font-weight: 600;
   }
   
+  /* Search Bar */
   .search-bar {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
   }
   
+  .search-bar input[type="datetime-local"] {
+    padding: 10px;
+    background-color: #1c1c1c;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #444;
+    font-size: 14px;
+  }
+  
+  .search-bar input[type="datetime-local"]:focus {
+    outline: none;
+    border-color: #4caf50;
+  }
+  
+  /* Movies List */
   .movies-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 25px;
   }
   
   .movie-card {
     background-color: #121212;
-    padding: 10px;
+    padding: 20px;
     border-radius: 8px;
-    width: 200px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
   }
   
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .movie-card img {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+  }
+  
+  .movie-card h4 {
+    font-size: 18px;
+    color: #fff;
+    margin-top: 15px;
+  }
+  
+  .movie-card .button {
+    padding: 8px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .movie-card .button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Error Message */
   .error-message {
     color: red;
     font-weight: bold;
+    font-size: 16px;
+    margin-top: 15px;
   }
-
+  
+  /* Delete Button */
   .delete-button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    padding: 10px 15px;
+    position: relative;
+    padding: 12px 18px;
     background-color: #f44336;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    margin-top: 25px;
+  }
+  
+  .delete-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Button Transitions */
+  .group-table td .button, .button {
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .group-table td .button.remove, .button.remove {
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .group-table td .button:hover, .button:hover {
+    opacity: 0.9;
+  }
+  
+  .group-table td .button.remove:hover, .button.remove:hover {
+    opacity: 0.9;
+  }
+  
+  .group-member-item button {
+    margin-left: 15px;
+  }
+  /* General Layout */
+.group-page {
+    padding: 30px;
+    background-color: #121212;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #f1f1f1;
+    font-size: 30px;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  
+  /* Create Group Form */
+  .create-group-form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 10px;
+    background-color: #1c1c1c;
+    border-radius: 8px;
+  }
+  
+  .create-group-input {
+    padding: 12px;
+    width: 350px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #1c1c1c;
+    color: white;
+    font-size: 14px;
+    transition: border-color 0.3s;
+  }
+  
+  .create-group-input:focus {
+    outline: none;
+    border-color: #4caf50;
+  }
+  
+  .button {
+    padding: 12px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease, opacity 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+    opacity: 0.9;
+  }
+  
+  .button.remove {
+    background-color: #f44336;
+  }
+  
+  .button.remove:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Group List */
+  .group-list {
+    margin-bottom: 30px;
+  }
+  
+  .group-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .group-table th, .group-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border: 1px solid #444;
+    font-size: 16px;
+    color: #f1f1f1;
+  }
+  
+  .group-table th {
+    background-color: #2c2c2c;
+    font-weight: 600;
+  }
+  
+  .group-table tr:nth-child(even) {
+    background-color: #333;
+  }
+  
+  .group-table tr:hover {
+    background-color: #444;
+  }
+  
+  .group-table .button {
+    padding: 8px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .group-table .button.remove {
+    background-color: #f44336;
+  }
+  
+  .group-table .button:hover, .group-table .button.remove:hover {
+    opacity: 0.9;
+  }
+  
+  /* Group Details Section */
+  .group-details-section {
+    background-color: #1c1c1c;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .group-details-section h3 {
+    font-size: 24px;
+    color: #fff;
+    margin-top: 0;
+  }
+  
+  .group-members-list, .movies-list {
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .group-member-item, .movie-item {
+    font-size: 16px;
+    color: #f1f1f1;
+    margin-bottom: 12px;
+  }
+  
+  .movie-name {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .movie-watchdate {
+    color: #b0b0b0;
+    font-size: 14px;
+  }
+  
+  /* Add Movie Section */
+  .add-movie-section {
+    background-color: #121212;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  
+  .add-movie-section h3 {
+    color: #fff;
+    margin-top: 0;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+  }
+  
+  .search-bar input[type="datetime-local"] {
+    padding: 10px;
+    background-color: #1c1c1c;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #444;
+    font-size: 14px;
+  }
+  
+  .search-bar input[type="datetime-local"]:focus {
+    outline: none;
+    border-color: #4caf50;
+  }
+  
+  /* Movies List */
+  .movies-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+  
+  .movie-card {
+    background-color: #121212;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .movie-card img {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+  }
+  
+  .movie-card h4 {
+    font-size: 18px;
+    color: #fff;
+    margin-top: 15px;
+  }
+  
+  .movie-card .button {
+    padding: 8px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .movie-card .button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 15px;
+  }
+  
+  /* Delete Button */
+  .delete-button {
+    position: relative;
+    padding: 12px 18px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 25px;
+  }
+  
+  .delete-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Button Transitions */
+  .group-table td .button, .button {
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .group-table td .button.remove, .button.remove {
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .group-table td .button:hover, .button:hover {
+    opacity: 0.9;
+  }
+  
+  .group-table td .button.remove:hover, .button.remove:hover {
+    opacity: 0.9;
+  }
+  
+  .group-member-item button {
+    margin-left: 15px;
   }
   
