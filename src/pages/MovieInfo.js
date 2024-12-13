@@ -167,8 +167,8 @@ function MovieInfo() {
 									movie.media_type === 'person' && movie.profile_path
 										? `https://image.tmdb.org/t/p/w500${movie.profile_path}`
 										: movie.poster_path
-										? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-										: noPhotoPoster
+											? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+											: noPhotoPoster
 								}
 								alt={movie.title || movie.name}
 								className="movie-info-poster"
@@ -191,8 +191,8 @@ function MovieInfo() {
 											Release Date:{' '}
 											{movie.release_date || movie.first_air_date
 												? new Date(
-														movie.release_date || movie.first_air_date
-												  ).toLocaleDateString('fi-FI')
+													movie.release_date || movie.first_air_date
+												).toLocaleDateString('fi-FI')
 												: 'N/A'}
 										</p>
 										<p className="movie-text">
@@ -235,8 +235,8 @@ function MovieInfo() {
 						Previous
 					</button>
 					<span>
-						Page {page} of {totalPages}
-					</span>
+      Page {page} of {totalPages}
+     </span>
 					<button
 						onClick={() => handlePageChange(page + 1)}
 						disabled={page === totalPages}>
@@ -256,9 +256,15 @@ function MovieInfo() {
 						<h2>{selectedMovie.title || selectedMovie.name}</h2>
 						<p>{selectedMovie.overview || 'No overview available.'}</p>
 						<div className="rating">
-							<hr />
+							<hr/>
 							<h4>Did you watch the movie? Rate it!</h4>
-							<ReviewForm movieId={selectedMovie.id} reviews={reviews} />
+							{token ? (
+								<ReviewForm movieId={selectedMovie.id} reviews={reviews}/>
+							) : (
+								<p>
+									Please <a href="/login" style={{color: 'white'}}>sign in</a> to leave a review.
+								</p>
+							)}
 						</div>
 						<button onClick={closeModal}>Close</button>
 					</div>

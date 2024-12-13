@@ -6,7 +6,7 @@ import '../styles/FavoriteList.css';
 
 export const addFavorite = async (movieID, token, setError, title) => {
 	if (!token) {
-		setError('User not authenticated');
+		alert('Please sign in to add favorites');
 		return;
 	}
 
@@ -65,7 +65,7 @@ const FavoriteList = () => {
 					movieID: movieID,
 				},
 			});
-			// Optionally, you can refetch the favorite movies after deletion
+
 			fetchFavoriteMovies();
 		} catch (err) {
 			if (err.response) {
