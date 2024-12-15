@@ -1,15 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUser } from '../components/UserProvider.js';
 import '../styles/ReviewForm.css';
 
 const ReviewForm = ({ movieId }) => {
+    const { user, token } = useUser();
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviews, setReviews] = useState([]);
     const [userData, setUserData] = useState({ email: '' });
 
-    const fetchUserReviews = async () => {
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get('https://moviexplorer.site/profile', {
+                headers: {
+                    Authorization: token,
+                },
+            });
+            const { email } = response.data;
+            setUserData({ email });
+            fetchUserReviews(email);
+        } catch (error) {
+            console.error('Error fetching user data:', error.response?.data || error.message);
+        }
+    };
+
+    const fetchUserReviews = async (email) => {
         try {
             const response = await axios.get('https://moviexplorer.site/review');
             const userReviews = response.data.reviews;
@@ -22,8 +39,10 @@ const ReviewForm = ({ movieId }) => {
     };
 
     useEffect(() => {
-        fetchUserReviews();
-    }, [movieId]);
+        if (user && token) {
+            fetchUserData();
+        }
+    }, [user, token, movieId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,11 +55,15 @@ const ReviewForm = ({ movieId }) => {
         };
 
         try {
-            const response = await axios.post('https://moviexplorer.site/review', newReview);
+            const response = await axios.post('https://moviexplorer.site/review', newReview, {
+                headers: {
+                    Authorization: token,
+                },
+            });
             alert(response.data.message);
             setReviewText('');
             setRating(0);
-            fetchUserReviews();
+            fetchUserReviews(userData.email);
         } catch (error) {
             alert(error.response?.data?.error || 'Failed to submit review.');
         }
