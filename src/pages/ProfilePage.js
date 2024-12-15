@@ -107,7 +107,16 @@ function ProfilePage() {
                     <strong>Email:</strong> {userData.email}
                 </p>
                 <p>
-                    <strong>Account created:</strong> {userData.createdAt}
+                    <p>
+                        <strong>Account created:</strong> {new Date(userData.createdAt).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric'
+                    })}
+                    </p>
                 </p>
             </div>
 
