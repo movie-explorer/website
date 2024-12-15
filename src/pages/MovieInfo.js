@@ -258,13 +258,7 @@ function MovieInfo() {
 						<div className="rating">
 							<hr/>
 							<h4>Did you watch the movie? Rate it!</h4>
-							{token ? (
-								<ReviewForm movieId={selectedMovie.id} reviews={reviews}/>
-							) : (
-								<p>
-									Please <a href="/login" style={{color: 'white'}}>sign in</a> to leave a review.
-								</p>
-							)}
+							<ReviewForm movieId={selectedMovie.id} reviews={reviews}/>
 						</div>
 						<button onClick={closeModal}>Close</button>
 					</div>
