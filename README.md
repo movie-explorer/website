@@ -48,7 +48,16 @@ Movie Explorer helps movie fans discover and explore films. The web app allows u
 You steal I steal
 
 ---
+# Langing page
+![Screenshot 2024-12-15 164607](https://github.com/user-attachments/assets/fc4b8956-395a-4a65-b125-2bdb842f49f1)
+---
+# Movie Info
+![Screenshot 2024-12-15 164630](https://github.com/user-attachments/assets/5c069f2b-bdaf-4df0-a0fe-f3226488ecf8)
 
-### Acknowledgements
+![Screenshot 2024-12-15 164743](https://github.com/user-attachments/assets/91835c57-28de-4c02-a85a-30cfcc0bcb8e)
 
+# Showtimes
+![Screenshot 2024-12-15 170229](https://github.com/user-attachments/assets/b8d62b99-7764-4d85-bada-d5287959b1d1)
+
+## Acknowledgements
 We want to thank our school mentors for their help and guidance during the development of this project.
