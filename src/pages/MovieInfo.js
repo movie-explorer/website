@@ -235,8 +235,8 @@ function MovieInfo() {
 						Previous
 					</button>
 					<span>
-      Page {page} of {totalPages}
-     </span>
+						Page {page} of {totalPages}
+					</span>
 					<button
 						onClick={() => handlePageChange(page + 1)}
 						disabled={page === totalPages}>
@@ -256,9 +256,9 @@ function MovieInfo() {
 						<h2>{selectedMovie.title || selectedMovie.name}</h2>
 						<p>{selectedMovie.overview || 'No overview available.'}</p>
 						<div className="rating">
-							<hr/>
+							<hr />
 							<h4>Did you watch the movie? Rate it!</h4>
-							<ReviewForm movieId={selectedMovie.id} reviews={reviews}/>
+							<ReviewForm movieId={selectedMovie.id} reviews={reviews} />
 						</div>
 						<button onClick={closeModal}>Close</button>
 					</div>
