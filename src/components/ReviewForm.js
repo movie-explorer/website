@@ -1,30 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useUser } from '../components/UserProvider.js';
 import '../styles/ReviewForm.css';
 
 const ReviewForm = ({ movieId }) => {
-    const { user, token } = useUser();
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviews, setReviews] = useState([]);
     const [userData, setUserData] = useState({ email: '' });
-
-    const fetchUserData = async () => {
-        try {
-            const response = await axios.get('https://moviexplorer.site/profile', {
-                headers: {
-                    Authorization: token,
-                },
-            });
-            const { email } = response.data;
-            setUserData({ email });
-            fetchUserReviews(email); 
-        } catch (error) {
-            console.error('Error fetching user data:', error.response?.data || error.message);
-        }
-    };
 
     const fetchUserReviews = async () => {
         try {
@@ -32,38 +15,32 @@ const ReviewForm = ({ movieId }) => {
             const userReviews = response.data.reviews;
 
             const filteredReviews = userReviews.filter(a => a.movied == movieId);
-            setReviews(filteredReviews); 
+            setReviews(filteredReviews);
         } catch (error) {
             console.error('Error fetching user reviews:', error.response?.data || error.message);
         }
     };
 
     useEffect(() => {
-        if (user && token) {
-            fetchUserData();
-        }
-    }, [user, token, movieId]);
+        fetchUserReviews();
+    }, [movieId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const newReview = {
             email: userData.email || '',
-            movieID: movieId, 
+            movieID: movieId,
             rating,
             text: reviewText,
         };
 
         try {
-            const response = await axios.post('https://moviexplorer.site/review', newReview, {
-                headers: {
-                    Authorization: token,
-                },
-            });
+            const response = await axios.post('https://moviexplorer.site/review', newReview);
             alert(response.data.message);
             setReviewText('');
             setRating(0);
-            fetchUserReviews(userData.email);  
+            fetchUserReviews();
         } catch (error) {
             alert(error.response?.data?.error || 'Failed to submit review.');
         }
